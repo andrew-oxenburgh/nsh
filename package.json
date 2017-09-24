@@ -1,0 +1,29 @@
+{
+  "name": "nsh",
+  "version": "1.0.0",
+  "description": "A really simple shell, running under node. An exercise, really. Edit",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test",
+    "lint": "eslint index.js ./test/** --fix ",
+    "qa": "npm run lint && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-oxenburgh/nsh.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrew-oxenburgh/nsh/issues"
+  },
+  "homepage": "https://github.com/andrew-oxenburgh/nsh#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.7.2",
+    "mocha": "^3.5.3"
+  }
+}
