@@ -8,8 +8,9 @@
   },
   "scripts": {
     "test": "mocha test",
-    "lint": "eslint index.js ./test/** --fix ",
-    "qa": "npm run lint && npm test"
+    "lint": "coffeelint .",
+    "qa": "rm *.js test/*.js && npm run lint && npm run build && npm test",
+    "build": "coffee -c ./ test/"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "homepage": "https://github.com/andrew-oxenburgh/nsh#readme",
   "devDependencies": {
     "chai": "^4.1.2",
-    "eslint": "^4.7.2",
+    "coffeelint": "^1.16.0",
+    "coffeescript": "^2.0.0",
     "mocha": "^3.5.3"
   },
   "dependencies": {
