@@ -1,59 +1,47 @@
-var {spawn} = require('child_process');
-var readline = require('readline');
+/*global require process*/
+
+
+'use strict';
+
+const {spawn} = require('child_process');
+const readline = require('readline');
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-function out(str) {
-    process.stdout.write(str);
-}
+const out = (str) => process.stdout.write(str);
 
-const run = (cmd) => {
-
-    if (!cmd.trim()) {
-        return;
-    }
-
-    args = cmd.split(' ');
-
-    let child;
-    if (args.length == 1) {
-        child = spawn(args[0]);
-    } else if (args.length > 1) {
-        child = spawn(args[0], args.slice(1));
-    }
+const spawnChild = function (args) {
     let err = '';
-    child.stdout.on('data', function (data) {
-        out(data + '\n');
-    });
-    child.stderr.on('data', function (data) {
-        err = data;
-    });
-    child.on('close', function (code) {
+    const child = spawn(args[0], args.slice(1));
+
+    child.stdout.on('data', (data) => out(data + '\n'));
+    child.stderr.on('data', (data) => err = data);
+    child.on('error', (code) => err = code.errno);
+
+    child.on('close', (code) => {
         if (code !== 0) {
-            out('error: ' + err + '\n')
+            out('error: ' + err + '\n');
         }
     });
-    child.on('error', function (code) {
-        err = code.errno;
-    });
 };
+
+const run = (cmd) => cmd.trim() ? spawnChild(cmd.trim().split(/\s+/)) : undefined;
 
 out('>> ');
 
 rl.on('line', (input) => {
     input = input ? input.trim() : '';
     if (input.length >= 0) {
-        if (input === 'exit' || input === 'bye' || input === 'quit') {
-            console.log('bye');
+        if (['exit', 'bye', 'quit'].indexOf(input) >= 0) {
+            out('>> bye bye <<\n');
             rl.close();
             return;
         }
         run(input);
-    } else {
-
+        out('herere');
     }
     out('>> ');
 });
