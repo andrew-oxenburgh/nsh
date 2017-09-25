@@ -5,6 +5,7 @@ A really simple shell, running under node. An exercise, really.
 To run it, clone me, and run the following commands:
 ```
 npm install
+npm run qa
 node index.js 
 ```
 

@@ -28,12 +28,15 @@ quit = ->
   out '>> bye bye <<\n'
   rl.close()
 
-rl.on 'line', (input) ->
-  input = if input then input.trim() else ''
-  if input
+rl.on 'line', (_input) ->
+  if _input
+    input = _input.trim()
     if isQuit(input)
       quit()
       return
-    else
-      run input.split(/\s+/)
+    run input.split(/\s+/)
   rl.prompt true
+
+rl.on 'SIGINT', ->
+  out '"quit" to quit\n'
+  rl.prompt(true)
